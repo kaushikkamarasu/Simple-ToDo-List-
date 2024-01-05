@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles/11-TOdolist.css">
+</head>
+
+<body>
+    <h1 style="margin-left: 40%;">To-Do List</h1>
+    <div class="todoinput">
+        <input placeholder="Enter Task" class="todoname" onkeydown="checkEvent(event)">
+        <input type="date" placeholder="dd-mm-yyyy" class="todotime">
+        <button class="add_buttons" onclick="add_func()">Add</button>
+    </div>
+    <div class="js-tasks todogrid"></div>
+
+    <script>
+
+        const array = [];
+        // const pair = {
+        //     name: '',
+        //     date_time: ''
+        // };
+        function checkEvent(event) {
+            if (event.key === 'Enter') add_func();
+        }
+        function add_func() {
+            let task_name = document.querySelector('.todoname').value;
+            let date = document.querySelector('.todotime').value;
+            array.push({ name: task_name, date_time: date });
+            render_list();
+        }
+        function render_list() {
+            let totalList = '';
+            for (let i = 0; i < array.length; i++) {
+                let temp_name = array[i].name;
+                let temp_date = array[i].date_time;
+                let html = `<div class="task_name">${i + 1}. ${temp_name}</div>
+                            <div class="date_info">${temp_date}</div> 
+                            <button class="remove_button" onclick="array.splice(${i},1);render_list()">Remove</button>`;
+                totalList += html;
+            }
+            //console.log(totalList);
+            document.querySelector('.js-tasks').innerHTML = totalList;
+        }
+
+    </script>
+</body>
+
+</html>
